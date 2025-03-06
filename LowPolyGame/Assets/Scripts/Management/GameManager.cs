@@ -1,20 +1,53 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
-
-// 게임 시작, 종료, 점수 관리 등 게임의 흐름을 관리.
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private static GameManager _instance;
+    public static GameManager Instance
     {
-        
+        get
+        {
+            if(_instance == null)
+            {
+                _instance = new GameManager("GameManager").AddComponent<GameManager>();
+            }
+            return _instance;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private Player _player; // Player를 GameManager에서 관리
+
+    public Player Player
     {
-        
+        get { return  _player  }
+        set { _player = value; }
     }
+
+    private void Awake()
+    {
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            if (_instance != this)
+            {
+                Destroy(gameObject);
+            }
+        }
+
+        InitPlayer();
+    }
+
+    private void InitPlayer()  // 플레이어 초기화
+    {
+        _player = new GameObject("Player").AddComponent<Player>();
+    }
+
+    // 게임 로직, 점수, 상태 등 관리
+
 }
