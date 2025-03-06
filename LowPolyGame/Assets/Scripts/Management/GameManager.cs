@@ -11,17 +11,17 @@ public class GameManager : MonoBehaviour
         {
             if(_instance == null)
             {
-                _instance = new GameManager("GameManager").AddComponent<GameManager>();
+                _instance = new GameObject("GameManager").AddComponent<GameManager>();
             }
             return _instance;
         }
     }
 
-    private Player _player; // Player를 GameManager에서 관리
+    private PlayerController _player; // PlayerController를 GameManager에서 관리
 
-    public Player Player
+    public PlayerController Player
     {
-        get { return  _player  }
+        get { return _player;  }
         set { _player = value; }
     }
 
@@ -45,7 +45,7 @@ public class GameManager : MonoBehaviour
 
     private void InitPlayer()  // 플레이어 초기화
     {
-        _player = new GameObject("Player").AddComponent<Player>();
+        _player = new GameObject("PlayerController").AddComponent<PlayerController>();
     }
 
     // 게임 로직, 점수, 상태 등 관리
