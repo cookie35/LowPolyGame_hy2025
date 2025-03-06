@@ -2,8 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// 이동(WASD), 점프(Space) 구현  (Rigidboy 사용)
-
 public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
@@ -18,64 +16,53 @@ public class PlayerController : MonoBehaviour
     public float maxXLook;
     private float camCurXRot;
     public float lookSensitivity;
-
     private Vector2 mouseDelta;
 
-    [HideInInspector]
-    public bool canLook = true;
+    //[hideininspector]
+    //public bool canlook = true;
 
-    private Rigidbody rigidbody;
+    private Rigidbody _rigidbody;
 
-    void Start()
+    private AnimationHandler _animationHandler;
+
+    private void Awake()
     {
-        Cursor.lockState = CursorLockMode.Locked;    
+        _rigidbody = GetComponent<Rigidbody>();
+        _animationHandler = GetComponent<AnimationHandler>();
     }
 
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         Move();
     }
 
     private void LateUpdate()
     {
-        if(canLook)
-        {
-            CameraLook();
-        }
+        CameraLook();
     }
 
-    public void OnLookInput(InputAction.CallbackContext context)
+    void Move()
     {
-        mouseDelta = context.ReadValue<Vector2>();
+        Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
+        dir *= moveSpeed;
+        dir.y = _rigidbody.velocity.y;
+
+        _rigidbody.velocity = dir;
+              
     }
 
-    public void OnMoveInput(InputAction.CallbackContext context)
+    public void OnMove(InputAction.CallbackContext context)
     {
         if(context.phase == InputActionPhase.Performed)
         {
             curMovementInput = context.ReadValue<Vector2>();
+            _animationHandler.SetRunState(true);
         }
         else if(context.phase == InputActionPhase.Canceled)
         {
-            curMovementInput = Vector2.zero;  
+            curMovementInput = Vector2.zero;
+            _animationHandler.SetRunState(false);
         }
-    }
-
-    public void OnJumpInput(InputAction.CallbackContext context)
-    {
-        if(context.phase == InputActionPhase.Started && IsGrounded())
-        {
-            rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
-        }
-    }
-
-    private void Move()
-    {
-        Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
-        dir *= moveSpeed;
-        dir.y = rigidbody.velocity.y;
-
-        rigidbody.velocity = dir;
     }
 
     void CameraLook()
@@ -87,6 +74,20 @@ public class PlayerController : MonoBehaviour
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
 
+    public void OnLook(InputAction.CallbackContext context)
+    {
+        mouseDelta = context.ReadValue<Vector2>();
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && IsGrounded())
+        {
+            _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
+            _animationHandler.SetJumpTrigger();
+        }
+    }
+
     bool IsGrounded()
     {
         Ray[] rays = new Ray[4]
@@ -94,24 +95,19 @@ public class PlayerController : MonoBehaviour
             new Ray(transform.position + (transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
             new Ray(transform.position + (-transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down),
             new Ray(transform.position + (transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down),
-            new Ray(transform.position + (-transform.forward * 0.2f) + (transform.up * 0.01f), Vector3.down)
+            new Ray(transform.position + (-transform.right * 0.2f) + (transform.up * 0.01f), Vector3.down)
         };
 
         for (int i = 0; i < rays.Length; i++)
         {
-            if (Physics.Raycast(rays[i], 0.1f, groundLayerMask))
+            if (Physics.Raycast(rays[i], 0.3f, groundLayerMask))
             {
                 return true;
             }
-
-            return false;
         }
-    }
 
-    public void ToggleCursor(bool toggle)
-    {
-        Cursor.lockState = toggle? CursorLockMode.None : CursorLockMode.Locked;
-        canLook = !toggle;
+        return false;
+
     }
 
 }
