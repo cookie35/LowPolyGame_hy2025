@@ -15,9 +15,9 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public PlayerBase _player; 
+    public Player _player; 
 
-    public PlayerBase Player
+    public Player Player
     {
         get { return _player; }
         set { _player = value; }
