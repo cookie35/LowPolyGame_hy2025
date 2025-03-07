@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5336782382748124319}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right IK Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3670511132885257104}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right IK Support
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 538475241111937251}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left.Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -102,7 +102,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8617643118878724565}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left IK Support
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -133,7 +133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3741243784374418158}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left IK Main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,7 +164,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 396661786217564343}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right.Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -195,7 +195,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4792311785930169580}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left.Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -226,7 +226,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1727638212392798739}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Front.Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -257,7 +257,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6804434919614830809}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Back.Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -289,7 +289,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2865933284610707156}
   - component: {fileID: 4405051589872650689}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cardboard Box (Closed)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -337,7 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4706594131876101429}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Front.Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,7 +368,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7717617402532760255}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right.Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -399,7 +399,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 199976725467190356}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Back.Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -433,7 +433,7 @@ GameObject:
   - component: {fileID: 5774490075068494239}
   - component: {fileID: 8445479958077276152}
   - component: {fileID: 5938755428549874755}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Item_closedBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -450,7 +450,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.153, z: 1.223}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2865933284610707156}
@@ -485,7 +485,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5452165062285080229}
   serializedVersion: 4
-  m_Mass: 1
+  m_Mass: 30
   m_Drag: 0
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 876c9aaa6f5a20044bd3ca2c97940cef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemSO: {fileID: 11400000, guid: c6f979dcfc4628b41a766f2eef5fa6f0, type: 2}
+  data: {fileID: 11400000, guid: c6f979dcfc4628b41a766f2eef5fa6f0, type: 2}
 --- !u!1 &5773503062045755902
 GameObject:
   m_ObjectHideFlags: 0
@@ -526,7 +526,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5408877871280990823}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Front.Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -557,7 +557,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1740045390040295092}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Back.Top
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -589,7 +589,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9069130966250603628}
   - component: {fileID: 9124982906555837793}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cardboard Box (Mesh)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -691,7 +691,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2121424302909943196}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Left.Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -722,7 +722,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4122909945437809405}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Right.Bottom
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -753,7 +753,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1427268924652015935}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}

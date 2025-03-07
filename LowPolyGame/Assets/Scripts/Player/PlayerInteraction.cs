@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -15,7 +13,7 @@ public class PlayerInteraction : MonoBehaviour
     public LayerMask layerMask;
 
     public GameObject curInteractGameObject;
-    private Interactable curInteractable;
+    private IInteractable curInteractable;
 
     public TextMeshProUGUI promptText;
     private Camera camera;
@@ -27,7 +25,7 @@ public class PlayerInteraction : MonoBehaviour
 
     void Update()
     {
-        if (Time.time - lastCheckTime < checkRate)
+        if (Time.time - lastCheckTime > checkRate)
         {
             lastCheckTime = Time.time;
 
@@ -39,7 +37,7 @@ public class PlayerInteraction : MonoBehaviour
                 if (hit.collider.gameObject != curInteractGameObject)
                 {
                     curInteractGameObject = hit.collider.gameObject;
-                    curInteractable = hit.collider.GetComponent<Interactable>();
+                    curInteractable = hit.collider.GetComponent<IInteractable>();
                     SetPromptText();
                 }
 
@@ -59,6 +57,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         promptText.gameObject.SetActive(true);
         promptText.text = curInteractable.GetInteractPrompt();
+   
     }
 
     public void OnInteractInput(InputAction.CallbackContext context)

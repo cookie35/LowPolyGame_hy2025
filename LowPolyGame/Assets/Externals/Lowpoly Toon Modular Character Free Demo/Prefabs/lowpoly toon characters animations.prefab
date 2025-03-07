@@ -1247,6 +1247,7 @@ GameObject:
   - component: {fileID: 2852753159722249207}
   - component: {fileID: 881288454424536070}
   - component: {fileID: 664066693376175713}
+  - component: {fileID: 4209543280781488737}
   m_Layer: 6
   m_Name: lowpoly toon characters animations
   m_TagString: Untagged
@@ -1420,7 +1421,19 @@ MonoBehaviour:
     m_ActionId: 753efa43-b3ce-4135-bc75-0c2289ff27f2
     m_ActionName: Player/Inventory[/Keyboard/tab]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4209543280781488737}
+        m_TargetAssemblyTypeName: PlayerInteraction, Assembly-CSharp
+        m_MethodName: OnInteractInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 3aaa3432-71ee-459f-bea6-7c3923fb6c07
     m_ActionName: Player/Interaction[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
@@ -1442,6 +1455,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controller: {fileID: 0}
   stat: {fileID: 0}
+  itemData: {fileID: 0}
 --- !u!114 &2852753159722249207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1488,6 +1502,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statUiManager: {fileID: 0}
+--- !u!114 &4209543280781488737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7804360210788916278}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c23516e49e5e8f1419d26f883998dfd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  checkRate: 0.01
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 128
+  curInteractGameObject: {fileID: 0}
+  promptText: {fileID: 0}
 --- !u!1 &7915401141920177893
 GameObject:
   m_ObjectHideFlags: 0
