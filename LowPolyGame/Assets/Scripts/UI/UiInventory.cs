@@ -11,9 +11,7 @@ public class UiInventory : MonoBehaviour
     public Transform slotPanel;
     public Transform dropPosition;
 
-    [Header("Selected Item")]
-    ItemData selectedItem;  // 얘 어디서 가져오지? 
-    private int selectedItemIndex = 0;  // 얘는 어디서 가져오지? 
+    [Header("Selected Item")] 
     public TextMeshProUGUI selectedItemName;
     public TextMeshProUGUI selectedItemDescription;
     public TextMeshProUGUI selectedStatName;
@@ -26,6 +24,10 @@ public class UiInventory : MonoBehaviour
     private PlayerController controller;
     private PlayerCondition stat;
 
+    ItemData selectedItem;
+    private int selectedItemIndex = 0;
+
+    int curEquipIndex;
 
     void Start()
     {
@@ -226,6 +228,38 @@ public class UiInventory : MonoBehaviour
         }
 
         UpdateUI();
+    }
+
+    public void OnEquipButton()
+    {
+        if (slots[curEquipIndex].equipped)
+        {
+            UnEquip(curEquipIndex);
+        }
+
+        slots[selectedItemIndex].equipped = true;
+        curEquipIndex = selectedItemIndex;
+        PlayerManager.Instance.Player.equip.EquipNew(selectedItem);
+        UpdateUI(); 
+
+        SelectItem(selectedItemIndex);
+    }
+
+    void UnEquip(int index)
+    {
+        slots[index].equipped = false;
+        PlayerManager.Instance.Player.equip.UnEquip();
+        UpdateUI();
+
+        if(selectedItemIndex == index)
+        {
+            SelectItem(selectedItemIndex);
+        }
+    }
+
+    public void OnUnEquipButton()
+    {
+        UnEquip(selectedItemIndex);
     }
 
 }
