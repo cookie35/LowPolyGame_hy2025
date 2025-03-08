@@ -6,8 +6,10 @@ using UnityEngine;
 public class UiInventory : MonoBehaviour
 {
     public ItemSlot[] slots;
+
     public GameObject inventoryWindow;
     public Transform slotPanel;
+    public Transform dropPosition;
 
     [Header("Select Item")]
     public TextMeshProUGUI selectedItemName;
@@ -26,8 +28,10 @@ public class UiInventory : MonoBehaviour
     {
         controller = PlayerManager.Instance.Player.controller;
         stat = PlayerManager.Instance.Player.stat;
+        dropPosition = PlayerManager.Instance.Player.dropPosition;
 
         controller.inventory += Toggle;
+        PlayerManager.Instance.Player.addItem += AddItem;
 
         inventoryWindow.SetActive(false);
         slots = new ItemSlot[slotPanel.childCount];
@@ -76,7 +80,87 @@ public class UiInventory : MonoBehaviour
 
     public bool IsOpen()
     {
-        return inventoryWindow.
+        return inventoryWindow.activeInHierarchy;
+    }
+
+    void AddItem()
+    {
+        ItemData data = PlayerManager.Instance.Player.itemData;
+        
+        // 아이템이 중복 가능한지 Check  (canStack 함수)
+        if (data.canStack)
+        {
+            ItemSlot slot = GetItemStack(data);
+            if (slot != null)
+            {
+                slot.quantity++;
+                UpdateUI();
+                PlayerManager.Instance.Player.itemData = null;
+                return;
+            }
+        }
+
+        // 일단 비어있는 슬롯 가져온다
+        ItemSlot emptySlot = GetEmptySlot();
+
+
+        // 있다면 슬롯에 넣어줌
+        if (emptySlot != null)
+        {
+            emptySlot.item = data;
+            emptySlot.quantity = 1;
+            UpdateUI();
+            PlayerManager.Instance.Player.itemData = null;
+            return;
+        }
+
+        // 없다면 아이템을 버림
+        ThrowItem(data);
+        PlayerManager.Instance.Player.itemData = null;
+    }
+
+    void UpdateUI()
+    {
+        for(int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item != null)
+            {
+                slots[i].Set();
+            }
+            else
+            {
+                slots[i].Clear();
+            }
+        }
+    }
+
+    ItemSlot GetItemStack(ItemData data)
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item == data && slots[i].quantity < data.maxStackAmount)
+            {
+                return slots[i];
+            }
+        }
+        return null;
+    }
+
+    ItemSlot GetEmptySlot()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item == null)
+            {
+                return slots[i];
+            }
+        }
+        return null;
+    }
+
+    void ThrowItem(ItemData data)
+    {
+        Instantiate(data.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360));
     }
 
 }
