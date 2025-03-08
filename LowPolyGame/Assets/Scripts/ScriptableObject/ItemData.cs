@@ -15,7 +15,7 @@ public enum ConsumableType
     Stamina
 }
 
-[SerializeField]
+[System.Serializable]
 public class ItemDataConsumable
 {
     public ConsumableType type;
@@ -23,7 +23,6 @@ public class ItemDataConsumable
 }
 
 [CreateAssetMenu(fileName = "Item", menuName = "New Item")]
-
 public class ItemData : ScriptableObject
 {
     [Header("Info")]

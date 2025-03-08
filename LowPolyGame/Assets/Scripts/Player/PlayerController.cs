@@ -16,22 +16,28 @@ public class PlayerController : MonoBehaviour
     public float maxXLook;
     private float camCurXRot;
     public float lookSensitivity;
+
     private Vector2 mouseDelta;
 
+    [HideInInspector]
     public bool canLook = true;
 
     public Action inventory;
-    private Rigidbody _rigidbody;
-
-    private AnimationHandler _animationHandler;
+    private Rigidbody rigidbody;
+    private AnimationHandler animationHandler;
 
     private void Awake()
     {
-        _rigidbody = GetComponent<Rigidbody>();
-        _animationHandler = GetComponent<AnimationHandler>();
+        rigidbody = GetComponent<Rigidbody>();
+        animationHandler = GetComponent<AnimationHandler>();
     }
 
-    void FixedUpdate()
+    void Start()
+    {
+        Cursor.lockState = CursorLockMode.Locked;    
+    }
+
+    private void FixedUpdate()
     {
         Move();
     }
@@ -45,14 +51,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void Move()
+    public void OnLook(InputAction.CallbackContext context)
     {
-        Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
-        dir *= moveSpeed;
-        dir.y = _rigidbody.velocity.y;
-
-        _rigidbody.velocity = dir;
-              
+        mouseDelta = context.ReadValue<Vector2>();
     }
 
     public void OnMove(InputAction.CallbackContext context)
@@ -60,13 +61,32 @@ public class PlayerController : MonoBehaviour
         if(context.phase == InputActionPhase.Performed)
         {
             curMovementInput = context.ReadValue<Vector2>();
-            _animationHandler.SetRunState(true);
+            animationHandler.SetRunState(true);
         }
         else if(context.phase == InputActionPhase.Canceled)
         {
             curMovementInput = Vector2.zero;
-            _animationHandler.SetRunState(false);
+            animationHandler.SetRunState(false);
         }
+    }
+
+    public void OnJump(InputAction.CallbackContext context)
+    {
+        if (context.phase == InputActionPhase.Started && IsGrounded())
+        {
+            rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
+            animationHandler.SetJumpTrigger();
+        }
+    }
+
+    private void Move()
+    {
+        Vector3 dir = transform.forward * curMovementInput.y + transform.right * curMovementInput.x;
+        dir *= moveSpeed;
+        dir.y = rigidbody.velocity.y;
+
+        rigidbody.velocity = dir;
+
     }
 
     void CameraLook()
@@ -76,20 +96,6 @@ public class PlayerController : MonoBehaviour
         cameraContainer.localEulerAngles = new Vector3(-camCurXRot, 0, 0);
 
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
-    }
-
-    public void OnLook(InputAction.CallbackContext context)
-    {
-        mouseDelta = context.ReadValue<Vector2>();
-    }
-
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        if (context.phase == InputActionPhase.Started && IsGrounded())
-        {
-            _rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
-            _animationHandler.SetJumpTrigger();
-        }
     }
 
     bool IsGrounded()

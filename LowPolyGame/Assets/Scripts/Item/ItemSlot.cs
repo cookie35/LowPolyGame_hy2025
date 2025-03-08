@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,11 +5,13 @@ using UnityEngine.UI;
 public class ItemSlot : MonoBehaviour
 {
     public ItemData item;
+
+    public UiInventory inventory;
     public Button button;
     public Image icon;
     public TextMeshProUGUI quantityTxt;
     private Outline outline;
-    public UiInventory inventory;
+
     public int index;
     public bool equipped;
     public int quantity;
@@ -43,6 +43,11 @@ public class ItemSlot : MonoBehaviour
         item = null;
         icon.gameObject.SetActive(false);
         quantityTxt.text = string.Empty;
+    }
+
+    public void OnClickButton()
+    {
+        inventory.SelectItem(index);
     }
 
 }

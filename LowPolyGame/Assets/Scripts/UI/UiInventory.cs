@@ -1,7 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.InputSystem;
 
 public class UiInventory : MonoBehaviour
 {
@@ -11,7 +11,9 @@ public class UiInventory : MonoBehaviour
     public Transform slotPanel;
     public Transform dropPosition;
 
-    [Header("Select Item")]
+    [Header("Selected Item")]
+    ItemData selectedItem;  // 얘 어디서 가져오지? 
+    private int selectedItemIndex = 0;  // 얘는 어디서 가져오지? 
     public TextMeshProUGUI selectedItemName;
     public TextMeshProUGUI selectedItemDescription;
     public TextMeshProUGUI selectedStatName;
@@ -22,12 +24,13 @@ public class UiInventory : MonoBehaviour
     public GameObject dropButton;
 
     private PlayerController controller;
-    private PlayerStat stat;
+    private PlayerCondition stat;
+
 
     void Start()
     {
         controller = PlayerManager.Instance.Player.controller;
-        stat = PlayerManager.Instance.Player.stat;
+        stat = PlayerManager.Instance.Player.condition;
         dropPosition = PlayerManager.Instance.Player.dropPosition;
 
         controller.inventory += Toggle;
@@ -41,16 +44,11 @@ public class UiInventory : MonoBehaviour
             slots[i] = slotPanel.GetChild(i).GetComponent<ItemSlot>();
             slots[i].index = i;
             slots[i].inventory = this;
+            slots[i].Clear();
         }
 
         ClearSelectedItemWindow();
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void ClearSelectedItemWindow()
@@ -158,9 +156,76 @@ public class UiInventory : MonoBehaviour
         return null;
     }
 
-    void ThrowItem(ItemData data)
+    public void ThrowItem(ItemData data)
     {
         Instantiate(data.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360));
+    }
+
+    public void SelectItem(int index)
+    {
+        if (slots[index].item == null) return;
+
+        selectedItem = slots[index].item;
+        selectedItemIndex = index;
+
+        selectedItemName.text = selectedItem.displayName;
+        selectedItemDescription.text = selectedItem.description;
+        
+        selectedStatName.text = string.Empty;
+        selectedStatValue.text = string.Empty;
+
+        for(int i = 0; i < selectedItem.consumables.Length; i++)
+        {
+            selectedStatName.text += selectedItem.consumables[i].type.ToString() + "\n";
+            selectedStatValue.text += selectedItem.consumables[i].type.ToString() + "\n";
+        }
+
+        useButton.SetActive(selectedItem.type == ItemType.Consumable);
+        equipButton.SetActive(selectedItem.type == ItemType.Equipable && !slots[index].equipped);
+        unequipButton.SetActive(selectedItem.type == ItemType.Equipable && slots[index].equipped);
+        dropButton.SetActive(true);
+    }
+
+    public void OnUseButton()
+    {
+        if(selectedItem.type == ItemType.Consumable)
+        {
+            for (int i = 0; i < selectedItem.consumables.Length; i++)
+            {
+                switch (selectedItem.consumables[i].type)
+                {
+                    case ConsumableType.Health:
+                        stat.Heal(selectedItem.consumables[i].value);
+                        break;
+                    case ConsumableType.Stamina:
+                        stat.Heal(selectedItem.consumables[i].value);
+                        break;
+                }
+            }
+            RemoveSelectedItem();
+
+        }
+    }
+
+    public void OnDropButton()
+    {
+        ThrowItem(selectedItem);
+        RemoveSelectedItem();
+    }
+
+    void RemoveSelectedItem()
+    {
+        slots[selectedItemIndex].quantity--;
+
+        if (slots[selectedItemIndex].quantity <= 0)
+        {
+            selectedItem = null;
+            slots[selectedItemIndex].item = null;
+            selectedItemIndex = -1;
+            ClearSelectedItemWindow();
+        }
+
+        UpdateUI();
     }
 
 }

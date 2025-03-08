@@ -12,7 +12,7 @@ public class DamageIndicator : MonoBehaviour
 
     void Start()
     {
-        PlayerManager.Instance.Player.stat.onTakeDamage += Flash;
+        PlayerManager.Instance.Player.condition.onTakeDamage += Flash;
     }
 
     public void Flash()

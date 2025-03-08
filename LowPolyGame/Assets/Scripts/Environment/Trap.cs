@@ -7,7 +7,7 @@ public class Trap : MonoBehaviour
     public int damage;
     public float damageRate;
 
-    List<PlayerDamage> things = new List<PlayerDamage>();
+    List<IDamagable> things = new List<IDamagable>();
 
     void Start()
     {
@@ -24,17 +24,17 @@ public class Trap : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.TryGetComponent(out PlayerDamage _playerDamage))
+        if(other.TryGetComponent(out IDamagable damagable))
         {
-            things.Add(_playerDamage);
+            things.Add(damagable);
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if(other.TryGetComponent(out PlayerDamage _playerDamage))
+        if(other.TryGetComponent(out IDamagable damagable))
         {
-            things.Remove(_playerDamage);
+            things.Remove(damagable);
         }
     }
 

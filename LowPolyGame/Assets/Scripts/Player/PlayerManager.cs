@@ -15,7 +15,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
-    public Player _player; 
+    private Player _player; 
 
     public Player Player
     {
