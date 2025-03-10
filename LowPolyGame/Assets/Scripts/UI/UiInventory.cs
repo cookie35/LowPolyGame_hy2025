@@ -23,17 +23,19 @@ public class UiInventory : MonoBehaviour
     public GameObject dropButton;
 
     private PlayerController controller;
-    private PlayerCondition stat;
+    private PlayerCondition condition;
 
     ItemData selectedItem;
     private int selectedItemIndex = 0;
 
     int curEquipIndex;
 
+    public float boostDuration = 5f;
+
     void Start()
     {
         controller = PlayerManager.Instance.Player.controller;
-        stat = PlayerManager.Instance.Player.condition;
+        condition = PlayerManager.Instance.Player.condition;
         dropPosition = PlayerManager.Instance.Player.dropPosition;
 
         controller.inventory += Toggle;
@@ -198,13 +200,13 @@ public class UiInventory : MonoBehaviour
                 switch (selectedItem.consumables[i].type)
                 {
                     case ConsumableType.Health:
-                        stat.Heal(selectedItem.consumables[i].value);
+                        condition.Heal(selectedItem.consumables[i].value);
                         break;
                     case ConsumableType.Stamina:
-                        stat.Heal(selectedItem.consumables[i].value);
+                        condition.Heal(selectedItem.consumables[i].value);
                         break;
                     case ConsumableType.SpeedBoost:
-                        StartCoroutine(ActivateSpeedBoost(selectedItem.consumables[i].duration));
+                        controller.ActiveSpeedBoost(selectedItem.consumables[i].duration);
                         break;
                 }
             }
@@ -264,13 +266,6 @@ public class UiInventory : MonoBehaviour
     public void OnUnEquipButton()
     {
         UnEquip(selectedItemIndex);
-    }
-
-    private IEnumerator ActivateSpeedBoost(float duration)   // 스피드 부스트 효과
-    {
-        controller.moveSpeed *= 2;  // 이동 속도를 2배로 증가
-        yield return new WaitForSeconds(duration);
-        controller.moveSpeed /= 2;  // 원래 속도로 복귀
     }
 
 }

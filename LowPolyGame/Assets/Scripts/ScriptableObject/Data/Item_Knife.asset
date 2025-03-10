@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Item_Knife
   m_EditorClassIdentifier: 
   displayName: "\uB098\uC774\uD504"
-  description: "\uC0C1\uC790\uB97C \uC5F4 \uC218 \uC788\uC74C"
+  description: "E\uD0A4\uB97C \uB20C\uB7EC \uC2B5\uB4DD(\uC0C1\uC790\uC5D0 \uC0AC\uC6A9)"
   type: 0
   icon: {fileID: 21300000, guid: e891842a39cf6b0428d63464955c943b, type: 3}
   dropPrefab: {fileID: 6376747720270217535, guid: a87645335c7cd044ea8de2c1acf37c2e, type: 3}

@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8746353369166279257}
   - component: {fileID: 8889288977776242336}
   - component: {fileID: 2407173735141728525}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: two-lane-linear-road-piece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,13 +29,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2158273397531729795}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.00072606344, y: -0.0024, z: -0.1}
   m_LocalScale: {x: 0.003333333, y: 1, z: 0.0033333325}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &3699448549899773173
 MeshFilter:
   m_ObjectHideFlags: 0

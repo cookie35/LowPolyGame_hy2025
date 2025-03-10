@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2cb4a10b4cdb9264cb744a579c9b01e7, type: 3}
-  m_Name: Item_Burger
+  m_Name: Item_SpeedBoost
   m_EditorClassIdentifier: 
-  displayName: "\uD584\uBC84\uAC70"
-  description: "E\uD0A4\uB97C \uB20C\uB7EC \uC2B5\uB4DD(HP \uC0C1\uC2B9)"
+  displayName: "\uC2A4\uD53C\uB4DC\uBD80\uC2A4\uD2B8"
+  description: "\uB9C8\uC2DC\uBA74 \uC18D\uB3C4\uAC00 \uC99D\uAC00\uD569\uB2C8\uB2E4."
   type: 1
   icon: {fileID: 21300000, guid: 743f866b2984f9147a2bb94cf59ddf15, type: 3}
-  dropPrefab: {fileID: 618135247607971260, guid: c5b2966c033b1bf4995d9cb5cda3f2f6, type: 3}
+  dropPrefab: {fileID: 2039044954577611389, guid: 1b0fee9be250e8642a58ddc92d2c7672, type: 3}
   canStack: 1
   maxStackAmount: 12
   consumables:
-  - type: 0
+  - type: 2
     value: 10
-    duration: 0
+    duration: 15
   equipPrefab: {fileID: 0}

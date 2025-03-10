@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -6,6 +7,9 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    private float originalMoveSpeed = 5f;
+    public float boostSpeed;  // 스피드 부스트 속도
+    private bool isBoosting = false;  // 스피드 부스트 상태
     private Vector2 curMovementInput;
     public float jumpPower;
     public LayerMask groundLayerMask;
@@ -30,6 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         animationHandler = GetComponent<AnimationHandler>();
+        originalMoveSpeed = moveSpeed; // 원래 속도 저장
     }
 
     void Start()
@@ -77,6 +82,24 @@ public class PlayerController : MonoBehaviour
             rigidbody.AddForce(Vector2.up * jumpPower, ForceMode.Impulse);
             animationHandler.SetJumpTrigger();
         }
+    }
+
+    public void ActiveSpeedBoost(float duration)
+    {
+        if (!isBoosting)
+        {
+            StartCoroutine(ActiveSpeedBoostCoroutine(duration));
+        }
+    }
+
+    private IEnumerator ActiveSpeedBoostCoroutine(float duration)  // 스피드 부스트 관련 함수
+    {
+        isBoosting = true;
+        moveSpeed *= 4;  // 이동 속도를 조절하고 싶다면 이 부분을 조절,
+                         // duration을 조절하고 싶다면 ScriptableObjcet에서 duration을 조절하면 됨
+        yield return new WaitForSeconds(duration);
+        moveSpeed = originalMoveSpeed;  // 원래 속도로 복귀
+        isBoosting = false;
     }
 
     private void Move()
