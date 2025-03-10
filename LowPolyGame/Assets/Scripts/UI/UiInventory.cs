@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -202,6 +203,9 @@ public class UiInventory : MonoBehaviour
                     case ConsumableType.Stamina:
                         stat.Heal(selectedItem.consumables[i].value);
                         break;
+                    case ConsumableType.SpeedBoost:
+                        StartCoroutine(ActivateSpeedBoost(selectedItem.consumables[i].duration));
+                        break;
                 }
             }
             RemoveSelectedItem();
@@ -260,6 +264,13 @@ public class UiInventory : MonoBehaviour
     public void OnUnEquipButton()
     {
         UnEquip(selectedItemIndex);
+    }
+
+    private IEnumerator ActivateSpeedBoost(float duration)   // 스피드 부스트 효과
+    {
+        controller.moveSpeed *= 2;  // 이동 속도를 2배로 증가
+        yield return new WaitForSeconds(duration);
+        controller.moveSpeed /= 2;  // 원래 속도로 복귀
     }
 
 }

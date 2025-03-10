@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum ItemType
@@ -12,7 +10,8 @@ public enum ItemType
 public enum ConsumableType
 {
     Health,
-    Stamina
+    Stamina,
+    SpeedBoost
 }
 
 [System.Serializable]
@@ -20,6 +19,7 @@ public class ItemDataConsumable
 {
     public ConsumableType type;
     public float value;
+    public float duration;
 }
 
 [CreateAssetMenu(fileName = "Item", menuName = "New Item")]

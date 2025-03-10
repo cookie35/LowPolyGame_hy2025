@@ -136,4 +136,9 @@ public class PlayerController : MonoBehaviour
         canLook = !toggle;
     }
 
+    public void OnJumpPad(float jumpForce)
+    {
+        rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+    }
+
 }
