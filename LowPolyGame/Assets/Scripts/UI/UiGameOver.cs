@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UiGameOver : MonoBehaviour
 {
@@ -30,5 +31,7 @@ public class UiGameOver : MonoBehaviour
         playerCondition.transform.rotation = playerStartRotation;
         playerCondition.uiCondition.health.SetValue(playerCondition.uiCondition.health.maxValue);
         playerCondition.uiCondition.stamina.SetValue(playerCondition.uiCondition.stamina.maxValue);
+
+        SceneManager.LoadScene("GameScene");
     }
 }

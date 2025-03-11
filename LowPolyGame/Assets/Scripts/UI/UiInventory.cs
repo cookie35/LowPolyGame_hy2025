@@ -163,7 +163,21 @@ public class UiInventory : MonoBehaviour
 
     public void ThrowItem(ItemData data)
     {
-        Instantiate(data.dropPrefab, dropPosition.position, Quaternion.Euler(Vector3.one * Random.value * 360));
+        Vector3 spawnPos = dropPosition.position + Vector3.up * 1.0f;
+
+        RaycastHit hit;
+        if (Physics.Raycast(spawnPos, Vector3.down, out hit, 2.0f, ~0))
+        {
+            spawnPos = hit.point + Vector3.up * 0.5f;
+        }
+        GameObject droppedItem = Instantiate(data.dropPrefab, spawnPos, Quaternion.Euler(Vector3.one * Random.value * 360));
+
+        Rigidbody rb = droppedItem.GetComponent<Rigidbody>();
+        if (rb != null)
+        {
+            rb.isKinematic = false;
+            rb.AddForce(Vector3.forward * 2f, ForceMode.Impulse);
+        }
     }
 
     public void SelectItem(int index)
