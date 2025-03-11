@@ -13,21 +13,15 @@ public class JumpPad : MonoBehaviour
         animator = GetComponent<Animator>();
     }
 
-    private void OnCollisionEnter(Collision collision)
-    {
-
-
-    }
-
     private void OnTriggerEnter(Collider other)
     {
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
         if (player != null)
         {
-            Rigidbody rb = player.GetComponent<Rigidbody>();
-            player.OnJumpPad(jumpForce);
+            Rigidbody rb = player.GetComponent<Rigidbody>(); 
+            player.OnJumpPad(jumpForce);  // // 플레이어컨트롤러에 있는 OnJumpPad 메서드 발동
 
-            animator.SetTrigger("IsJump");
+            animator.SetTrigger("IsJump");  // 애니메이션 실행
         }
     }
 
