@@ -29,6 +29,11 @@ public class Condition : MonoBehaviour
         curValue = Mathf.Max(curValue - value, 0.0f);
     }
 
+    public void SetValue(float value)
+    {
+        curValue = Mathf.Clamp(value, 0, maxValue);
+    }
+
     float GetPercentage()
     {
         return curValue / maxValue;

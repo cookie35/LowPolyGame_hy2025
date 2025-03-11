@@ -121,7 +121,7 @@ public class PlayerController : MonoBehaviour
         transform.eulerAngles += new Vector3(0, mouseDelta.x * lookSensitivity, 0);
     }
 
-    bool IsGrounded()
+    public bool IsGrounded()
     {
         Ray[] rays = new Ray[4]
         {
